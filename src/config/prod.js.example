@@ -1,0 +1,13 @@
+export default {
+  appKeys: ['qr-meals'],
+  sessionKey: 'qr-meals-session',
+  port: 8510,
+  db: {
+    host: 'localhost',
+    user: 'qrmeals',
+    password: 'password',
+    database: 'qrmeals',
+    port: 3306
+  },
+  salt: 'salt-here'
+};

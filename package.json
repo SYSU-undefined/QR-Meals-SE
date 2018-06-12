@@ -1,0 +1,35 @@
+{
+  "name": "qr-meals-se",
+  "version": "1.0.0",
+  "description": "QR-Meals Server End",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SYSU-undefined/QR-Meals-SE.git"
+  },
+  "author": "SYSU-undefined",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/SYSU-undefined/QR-Meals-SE/issues"
+  },
+  "homepage": "https://github.com/SYSU-undefined/QR-Meals-SE#readme",
+  "dependencies": {
+    "esm": "^3.0.34",
+    "koa": "^2.5.1",
+    "koa-bodyparser": "^4.2.0",
+    "koa-express-router": "^0.3.4",
+    "koa-session": "^5.8.1",
+    "lodash": "^4.17.10",
+    "moment": "^2.22.1",
+    "mysql": "^2.15.0"
+  },
+  "esm": {
+    "mode": "auto"
+  }
+}

@@ -1,0 +1,7 @@
+.vscode/
+.DS_store
+*.log
+node_modules/
+src/config/dev.js
+src/config/prod.js
+src/config/test.js
