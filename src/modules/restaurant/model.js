@@ -55,7 +55,6 @@ export async function getRestaurantInfo(restaurant_id) {
 
 /**
  * @returns {Promise<Boolean>}
- * @param {number} restaurant_id
  * @param {Restaurant} restaurant
  */
 export async function modifyRestaurantInfo(restaurant) {
