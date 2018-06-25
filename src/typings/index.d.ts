@@ -12,4 +12,11 @@ declare global {
   type MysqlConn = mysql.PoolConnection
   type MysqlPool = mysql.Pool
   type MysqlQueryable = MysqlConn | MysqlPool
+
+  type Staff = QRSE.Staff
+  type Restaurant = QRSE.Restaurant
+  type Dish = QRSE.Dish
+  type Order = QRSE.Order
+  type OrderItem = QRSE.OrderItem
+  type Desk = QRSE.Desk
 }
