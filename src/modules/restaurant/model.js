@@ -58,7 +58,7 @@ export async function getRestaurantInfo(restaurant_id) {
  * @param {Restaurant} restaurant
  */
 export async function modifyRestaurantInfo(restaurant) {
-  const sql = `UPDATE restaurant SET name = ? AND location = ? WHERE restaurant_id = ?`;
+  const sql = `UPDATE restaurant SET name = ?, location = ? WHERE restaurant_id = ?`;
   await query(sql, [restaurant.name, restaurant.location, restaurant.restaurant_id]);
   return true;
 }
