@@ -107,3 +107,11 @@ export async function transaction(func) {
     if (conn) conn.release(); // 释放连接
   }
 }
+
+/**
+ *
+ * @param {string} str
+ */
+export function escape(str) {
+  return Pool.escape(str);
+}
