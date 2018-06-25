@@ -3,6 +3,7 @@ import session from 'koa-session';
 import bodyParser from 'koa-bodyparser';
 
 import { sessionKey } from './config';
+import authRtr from './modules/auth/router';
 
 export default function setRoute(app) {
   const apiRtr = new Router({ prefix: '/api' });
@@ -10,6 +11,8 @@ export default function setRoute(app) {
 
   // 使用 session, bodyparser 中间件
   apiRtr.use(getSessionMid(app), getBodyParserMid());
+
+  apiRtr.use('/auth', authRtr.routes());
 }
 
 function getSessionMid(app) {
