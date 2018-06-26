@@ -9,5 +9,7 @@ export default {
     database: 'qrmeals',
     port: 3306
   },
-  salt: 'salt-here'
+  salt: 'salt-here',
+  appid: 'appid-here',
+  appsecret: 'appsecret-here'
 };
