@@ -26,6 +26,7 @@ declare module 'qrse' {
     customer_id : string
     item_count : number
     total_price : number
+    desk_id : number
     created_at : Date
   }
 
