@@ -6,6 +6,13 @@ declare module 'qrse' {
     name : string
   }
 
+  interface Admin {
+    admin_id : number
+    username : string
+    password : string
+    staff : Staff
+  }
+
   interface Restaurant {
     restaurant_id : number
     name : string

@@ -14,6 +14,7 @@ declare global {
   type MysqlQueryable = MysqlConn | MysqlPool
 
   type Staff = QRSE.Staff
+  type Admin = QRSE.Admin
   type Restaurant = QRSE.Restaurant
   type Dish = QRSE.Dish
   type Order = QRSE.Order

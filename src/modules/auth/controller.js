@@ -1,4 +1,4 @@
-import { auth } from './model';
+import { authWithUsernamePassword } from './model';
 import { md5 } from '../../utils';
 import { salt } from '../../config';
 import { AE } from '../../utils';
@@ -37,7 +37,7 @@ export async function login(ctx, next) {
     // 未认证，尝试认证
     const { username, password } = ctx.request.body;
     const password_enc = encryptPassword(password);
-    const auth_res = await auth(username, password_enc);
+    const auth_res = await authWithUsernamePassword(username, password_enc);
     if (auth_res == null) {
       // 认证失败
       return ctx.setResp('认证失败', null, null, AE.WRONG_PASSWORD);
