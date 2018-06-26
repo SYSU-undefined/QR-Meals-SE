@@ -8,9 +8,10 @@ declare module 'qrse' {
 
   interface Admin {
     admin_id : number
+    restaurant_id : number
     username : string
     password : string
-    staff : Staff
+    realname : string
   }
 
   interface Restaurant {
