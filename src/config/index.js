@@ -15,6 +15,7 @@ export const salt = config.salt;
 export const sessionKey = config.sessionKey;
 export const appid = config.appid;
 export const appsecret = config.appsecret;
+export const redis = config.redis;
 
 function getConfig() {
   // Default NODE_ENV='dev'
