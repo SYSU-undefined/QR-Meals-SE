@@ -57,10 +57,10 @@ export async function updateOne(dish) {
 
 /**
  * @returns {Promise<boolean>}
- * @param {Dish} dish
+ * @param {number} dish_id
  */
-export async function deleteOne(dish) {
+export async function deleteOne(dish_id) {
   const sql = `DELETE FROM dish  WHERE dish_id = ?`;
-  await query(sql, [dish.dish_id]);
+  await query(sql, [dish_id]);
   return true;
 }

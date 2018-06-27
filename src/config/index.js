@@ -16,6 +16,7 @@ export const sessionKey = config.sessionKey;
 export const appid = config.appid;
 export const appsecret = config.appsecret;
 export const redis = config.redis;
+export const fs = config.fs;
 
 function getConfig() {
   // Default NODE_ENV='dev'
