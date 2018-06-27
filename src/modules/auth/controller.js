@@ -17,8 +17,8 @@ function encryptPassword(password) {
  */
 export async function checkAuth(ctx, next) {
   if (ctx.session.auth_type) {
-    // 已认证
-    return ctx.setResp('已认证', true);
+    const staff_info = await getStaffPost(openid);
+    return ctx.setResp('已认证', staff_info);
   } else {
     // 未认证
     throw new SoftError(AE.NOT_AUTHORIZED, '未认证');
