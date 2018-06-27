@@ -1,4 +1,4 @@
-import AdminModel from './model';
+import * as AdminModel from './model';
 import { md5 } from '../../utils';
 import { salt } from '../../config';
 import { AE } from '../../utils';
