@@ -2,19 +2,19 @@ import { query, escape } from '../db/service';
 
 /**
  * @returns {Promise<Array<Restaurant>>}
- * @param {*} params
+ * @param {RestaurantQueryParam & Limit} params
  */
-export async function findRestaurantByConditions(params) {
+export async function retrieveAllByConditions(params) {
   const limit = params.limit || 10;
   if (!params) {
     // no params
-    const sql = `SELECT restaurant_id, name, location FROM restaurant limit ?`;
+    const sql = `SELECT restaurant_id, name, description FROM restaurant limit ?`;
     const res = await query(sql, [limit]);
     return res;
   } else {
-    // params: name, location
-    const { name, location } = params;
-    const obj = { name, location };
+    // params: name, description
+    const { name, description } = params;
+    const obj = { name, description };
     const param_arr = [];
     for (const key in obj) {
       if (obj[key]) {
@@ -23,7 +23,8 @@ export async function findRestaurantByConditions(params) {
       }
     }
     const querys = param_arr.join(' AND ');
-    const sql = `SELECT restaurant_id, name, location FROM restaurant limit ? WHERE ${querys}`;
+    const sql = `SELECT restaurant_id, name, description FROM restaurant
+    limit ? WHERE ${querys}`;
     const res = await query(sql, [limit]);
     return res;
   }
@@ -33,12 +34,12 @@ export async function findRestaurantByConditions(params) {
  * @returns {Promise<Boolean>}
  * @param {Restaurant} restaurant
  */
-export async function createRestaurant(restaurant) {
+export async function create(restaurant) {
   if (!restaurant) {
     return false;
   } else {
-    const sql = `INSERT INTO restaurant (name, location) VALUES (?, ?)`;
-    await query(sql, [restaurant.name, restaurant.location]);
+    const sql = `INSERT INTO restaurant (name, description) VALUES (?, ?)`;
+    await query(sql, [restaurant.name, restaurant.description]);
     return true;
   }
 }
@@ -47,8 +48,9 @@ export async function createRestaurant(restaurant) {
  * @returns {Promise<Restaurant>}
  * @param {number} restaurant_id
  */
-export async function getRestaurantInfo(restaurant_id) {
-  const sql = `SELECT restaurant_id, name, location FROM restaurant WHERE restaurant_id = ?`;
+export async function retrieveOne(restaurant_id) {
+  const sql = `SELECT restaurant_id, name, description FROM restaurant
+               WHERE restaurant_id = ?`;
   const [res] = await query(sql, [restaurant_id]);
   return res;
 }
@@ -57,18 +59,18 @@ export async function getRestaurantInfo(restaurant_id) {
  * @returns {Promise<Boolean>}
  * @param {Restaurant} restaurant
  */
-export async function modifyRestaurantInfo(restaurant) {
-  const sql = `UPDATE restaurant SET name = ?, location = ? WHERE restaurant_id = ?`;
-  await query(sql, [restaurant.name, restaurant.location, restaurant.restaurant_id]);
+export async function updateOne(restaurant) {
+  const sql = `UPDATE restaurant SET name = ?, description = ? WHERE restaurant_id = ?`;
+  await query(sql, [restaurant.name, restaurant.description, restaurant.restaurant_id]);
   return true;
 }
 
 /**
  * @returns {Promise<Boolean>}
- * @param {Restaurant} restaurant
+ * @param {number} restaurant_id
  */
-export async function deleteRestaurant(restaurant) {
+export async function deleteOne(restaurant_id) {
   const sql = `DELETE FROM restaurant WHERE restaurant_id = ?`;
-  await query(sql, [restaurant.restaurant_id]);
+  await query(sql, [restaurant_id]);
   return true;
 }

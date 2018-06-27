@@ -1,4 +1,8 @@
 declare module 'qrse' {
+  interface Limit {
+    limit : number | string
+  }
+
   interface Staff {
     staff_id : string
     restaurant_id : number
@@ -18,6 +22,12 @@ declare module 'qrse' {
     restaurant_id : number
     name : string
     location : string
+    description : string
+  }
+
+  interface RestaurantQueryParam {
+    name : string
+    description : string
   }
 
   interface Dish {
@@ -26,6 +36,12 @@ declare module 'qrse' {
     description : string
     restaurant_id : number
     price : number
+  }
+
+  interface DishQueryParam {
+    name : string
+    description : string
+    restaurant_id : number
   }
 
   interface Order {

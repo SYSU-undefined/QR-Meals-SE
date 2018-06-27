@@ -20,4 +20,9 @@ declare global {
   type Order = QRSE.Order
   type OrderItem = QRSE.OrderItem
   type Desk = QRSE.Desk
+
+  type DishQueryParam = QRSE.DishQueryParam
+  type RestaurantQueryParam = QRSE.RestaurantQueryParam
+
+  type Limit = QRSE.Limit
 }
