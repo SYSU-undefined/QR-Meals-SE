@@ -45,6 +45,7 @@ export async function login(ctx, next) {
       throw SoftError(AE.WRONG_PASSWORD, '认证失败');
     } else {
       // 认证成功，设置session
+      ctx.session.auth_type = 'userpass';
       ctx.session.admin_id = auth_res.admin_id;
       return ctx.setResp('认证成功');
     }
