@@ -8,13 +8,13 @@ export async function retrieveAllByConditions(params) {
   const limit = params.limit || 10;
   if (!params) {
     // no params
-    const sql = `SELECT restaurant_id, name, description FROM restaurant limit ?`;
+    const sql = `SELECT restaurant_id, name, description, location FROM restaurant limit ?`;
     const res = await query(sql, [limit]);
     return res;
   } else {
     // params: name, description
-    const { name, description } = params;
-    const obj = { name, description };
+    const { name, description, location } = params;
+    const obj = { name, description, location };
     const param_arr = [];
     for (const key in obj) {
       if (obj[key]) {
@@ -23,7 +23,7 @@ export async function retrieveAllByConditions(params) {
       }
     }
     const querys = param_arr.join(' AND ');
-    const sql = `SELECT restaurant_id, name, description FROM restaurant
+    const sql = `SELECT restaurant_id, name, description, location FROM restaurant
     limit ? WHERE ${querys}`;
     const res = await query(sql, [limit]);
     return res;
@@ -38,8 +38,8 @@ export async function create(restaurant) {
   if (!restaurant) {
     return false;
   } else {
-    const sql = `INSERT INTO restaurant (name, description) VALUES (?, ?)`;
-    await query(sql, [restaurant.name, restaurant.description]);
+    const sql = `INSERT INTO restaurant (name, description, location) VALUES (?, ?, ?)`;
+    await query(sql, [restaurant.name, restaurant.description, restaurant.location]);
     return true;
   }
 }
@@ -49,7 +49,7 @@ export async function create(restaurant) {
  * @param {number} restaurant_id
  */
 export async function retrieveOne(restaurant_id) {
-  const sql = `SELECT restaurant_id, name, description FROM restaurant
+  const sql = `SELECT restaurant_id, name, description, location FROM restaurant
                WHERE restaurant_id = ?`;
   const [res] = await query(sql, [restaurant_id]);
   return res;
@@ -60,8 +60,8 @@ export async function retrieveOne(restaurant_id) {
  * @param {Restaurant} restaurant
  */
 export async function updateOne(restaurant) {
-  const sql = `UPDATE restaurant SET name = ?, description = ? WHERE restaurant_id = ?`;
-  await query(sql, [restaurant.name, restaurant.description, restaurant.restaurant_id]);
+  const sql = `UPDATE restaurant SET name = ?, description = ?, location = ? WHERE restaurant_id = ?`;
+  await query(sql, [restaurant.name, restaurant.description, restaurant.location, restaurant.restaurant_id]);
   return true;
 }
 

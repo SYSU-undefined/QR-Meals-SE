@@ -49,8 +49,8 @@ export async function parseRestaurant(ctx, next, id) {
  * @param {INext} next
  */
 export async function retrieveAllRestaurants(ctx, next) {
-  const { limit, name, description } = ctx.query;
-  const param = { limit, name, description };
+  const { limit, name, description, location } = ctx.query;
+  const param = { limit, name, description, location };
   const res = await RestaurantModel.retrieveAllByConditions(param);
   return ctx.setResp('查询成功', res);
 }
@@ -87,7 +87,7 @@ export async function updateOneRestaurant(ctx, next, id) {
     throw new SoftError(AE.NO_PERMISSION, '权限不足');
   }
 
-  const { name, location, description } = ctx.body;
+  const { name, location, description } = ctx.request.body;
 
   const newRestaurant = {
     restaurant_id: id,
