@@ -2,7 +2,7 @@ declare module 'qrse' {
   interface Staff {
     staff_id : string
     restaurant_id : number
-    authority : number
+    post : string
     name : string
   }
 

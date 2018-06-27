@@ -3,7 +3,7 @@ import { md5 } from '../../utils';
 import { salt } from '../../config';
 import { AE } from '../../utils';
 import { authWX } from './service';
-import { getStaffAuthority } from '../staff/service';
+import { getStaffPost } from '../staff/service';
 import { SoftError } from '../../utils/AE';
 
 function encryptPassword(password) {
@@ -60,7 +60,7 @@ export async function login(ctx, next) {
 export async function loginWithWX(ctx, next) {
   if (ctx.session.auth_type === 'openid') {
     const { openid } = ctx.session;
-    const staff_info = await getStaffAuthority(openid);
+    const staff_info = await getStaffPost(openid);
     return ctx.setResp('已登录，无需重复登录', staff_info);
   }
 
@@ -70,7 +70,7 @@ export async function loginWithWX(ctx, next) {
   ctx.session.openid = openid;
   ctx.session.session_key = session_key;
 
-  const staff_info = await getStaffAuthority(openid);
+  const staff_info = await getStaffPost(openid);
 
   // ctx.session.staff_info = staff_info;
 
