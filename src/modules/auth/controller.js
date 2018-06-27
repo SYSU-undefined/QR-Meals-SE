@@ -4,6 +4,7 @@ import { salt } from '../../config';
 import { AE } from '../../utils';
 import { authWX } from './service';
 import { getStaffAuthority } from '../staff/service';
+import { SoftError } from '../../utils/AE';
 
 function encryptPassword(password) {
   return md5(`${password}${salt}`);
@@ -15,14 +16,13 @@ function encryptPassword(password) {
  * @param {INext} next
  */
 export async function checkAuth(ctx, next) {
-  if ('user' in ctx.session) {
+  if (ctx.session.auth_type) {
     // 已认证
-    return ctx.setResp('已认证', true, null, AE.OK);
+    return ctx.setResp('已认证', true);
   } else {
     // 未认证
-    return ctx.setResp('未认证', false, null, AE.NOT_AUTHORIZED);
+    throw SoftError(AE.NOT_AUTHORIZED, '未认证');
   }
-  // await next();
 }
 
 /**
@@ -31,10 +31,10 @@ export async function checkAuth(ctx, next) {
  * @param {INext} next
  */
 export async function login(ctx, next) {
-  // TODO: 微信登录与后台登录逻辑有区别
-  if ('user' in ctx.session) {
+  // 后台登录逻辑 而非 微信登录
+  if (ctx.session.auth_type) {
     // 已认证
-    return ctx.setResp('已认证，无需重新登录', null, null, AE.OK);
+    return ctx.setResp('已认证，无需重新登录');
   } else {
     // 未认证，尝试认证
     const { username, password } = ctx.request.body;
@@ -42,15 +42,11 @@ export async function login(ctx, next) {
     const auth_res = await authWithUsernamePassword(username, password_enc);
     if (auth_res == null) {
       // 认证失败
-      return ctx.setResp('认证失败', null, null, AE.WRONG_PASSWORD);
+      throw SoftError(AE.WRONG_PASSWORD, '认证失败');
     } else {
       // 认证成功，设置session
-      ctx.session.user = {
-        // TODO: may be modified
-        id: auth_res.id,
-        // TODO: there may be role
-      };
-      return ctx.setResp('认证成功', null, null, AE.OK);
+      ctx.session.admin_id = auth_res.admin_id;
+      return ctx.setResp('认证成功');
     }
   }
 }
@@ -61,6 +57,12 @@ export async function login(ctx, next) {
  * @param {INext} next
  */
 export async function loginWithWX(ctx, next) {
+  if (ctx.session.auth_type === 'openid') {
+    const { openid } = ctx.session;
+    const staff_info = await getStaffAuthority(openid);
+    return ctx.setResp('已登录，无需重复登录', staff_info);
+  }
+
   const { code } = ctx.request.body;
   const { openid, session_key } = await authWX(code);
   ctx.session.auth_type = 'openid';
@@ -72,7 +74,7 @@ export async function loginWithWX(ctx, next) {
   // ctx.session.staff_info = staff_info;
 
   // 用于前端的权限管理
-  ctx.setResp('登录成功', staff_info);
+  return ctx.setResp('登录成功', staff_info);
 }
 
 /**
@@ -81,12 +83,12 @@ export async function loginWithWX(ctx, next) {
  * @param {INext} next
  */
 export async function logout(ctx, next) {
-  if ('user' in ctx.session) {
+  if (ctx.session.auth_type) {
     // 登出
-    delete ctx.session['user'];
+    delete ctx.session.auth_type;
     return ctx.setResp('登出成功', null, null, AE.OK);
   } else {
     // 此用户未登录
-    return ctx.setResp('未认证', null, null, AE.NOT_AUTHORIZED);
+    throw SoftError(AE.NOT_AUTHORIZED, '未认证');
   }
 }
