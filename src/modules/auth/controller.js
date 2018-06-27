@@ -1,4 +1,4 @@
-import { authWithUsernamePassword } from './model';
+import AdminModel from './model';
 import { md5 } from '../../utils';
 import { salt } from '../../config';
 import { AE } from '../../utils';
@@ -39,7 +39,7 @@ export async function login(ctx, next) {
     // 未认证，尝试认证
     const { username, password } = ctx.request.body;
     const password_enc = encryptPassword(password);
-    const auth_res = await authWithUsernamePassword(username, password_enc);
+    const auth_res = await AdminModel.retrieveOneByUserPass(username, password_enc);
     if (auth_res == null) {
       // 认证失败
       throw new SoftError(AE.WRONG_PASSWORD, '认证失败');

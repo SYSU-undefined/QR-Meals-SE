@@ -5,7 +5,7 @@ import { query } from '../db/service';
  * @param {string} username
  * @param {string} password
  */
-export async function authWithUsernamePassword(username, password) {
+export async function retrieveOneByUserPass(username, password) {
   const sql = `SELECT admin_id, restaurant_id, username,
                password, realname
                FROM admin
