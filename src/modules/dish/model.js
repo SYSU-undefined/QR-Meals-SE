@@ -26,14 +26,14 @@ export async function retrieveAllByConditions(params) {
 }
 
 /**
- * @returns {Promise<boolean>}
+ * @returns {Promise<number>}
  * @param {Dish} dish
  */
 export async function create(dish) {
   if (!dish) return false;
   const sql = `INSERT INTO dish (name, description, restaurant_id, price) VALUES (?, ?, ?)`;
-  await query(sql, [dish.name, dish.restaurant_id, dish.price]);
-  return true;
+  const res = await query(sql, [dish.name, dish.restaurant_id, dish.price]);
+  return res.insertId;
 }
 
 /**
