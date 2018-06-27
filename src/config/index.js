@@ -13,6 +13,8 @@ export const port = config.port;
 export const db = config.db;
 export const salt = config.salt;
 export const sessionKey = config.sessionKey;
+export const appid = config.appid;
+export const appsecret = config.appsecret;
 
 function getConfig() {
   // Default NODE_ENV='dev'

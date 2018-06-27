@@ -2,6 +2,8 @@ import { authWithUsernamePassword } from './model';
 import { md5 } from '../../utils';
 import { salt } from '../../config';
 import { AE } from '../../utils';
+import { authWX } from './service';
+import { getStaffAuthority } from '../staff/service';
 
 function encryptPassword(password) {
   return md5(`${password}${salt}`);
@@ -51,6 +53,26 @@ export async function login(ctx, next) {
       return ctx.setResp('认证成功', null, null, AE.OK);
     }
   }
+}
+
+/**
+ *
+ * @param {Context} ctx
+ * @param {INext} next
+ */
+export async function loginWithWX(ctx, next) {
+  const { code } = ctx.request.body;
+  const { openid, session_key } = await authWX(code);
+  ctx.session.auth_type = 'openid';
+  ctx.session.openid = openid;
+  ctx.session.session_key = session_key;
+
+  const staff_info = await getStaffAuthority(openid);
+
+  // ctx.session.staff_info = staff_info;
+
+  // 用于前端的权限管理
+  ctx.setResp('登录成功', staff_info);
 }
 
 /**
