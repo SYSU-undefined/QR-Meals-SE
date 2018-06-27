@@ -2,9 +2,9 @@ import { query, escape } from '../db/service';
 
 /**
  * @returns {Promise<Array<Dish>>}
- * @param {*} params
+ * @param {DishQueryParam & Limit} params
  */
-export async function findDishByConditions(params) {
+export async function retrieveAllByConditions(params) {
   // finding without restaurant_id is not allowed
   if (!params.restaurant_id) return [];
   const restaurant_id = params.restaurant_id;
@@ -29,7 +29,7 @@ export async function findDishByConditions(params) {
  * @returns {Promise<boolean>}
  * @param {Dish} dish
  */
-export async function createDish(dish) {
+export async function create(dish) {
   if (!dish) return false;
   const sql = `INSERT INTO dish (name, description, restaurant_id, price) VALUES (?, ?, ?)`;
   await query(sql, [dish.name, dish.restaurant_id, dish.price]);
@@ -40,7 +40,7 @@ export async function createDish(dish) {
  * @returns {Promise<Dish>}
  * @param {number} dish_id
  */
-export async function getDishInfo(dish_id) {
+export async function retrieveOne(dish_id) {
   const sql = `SELECT dish_id, name, description, restaurant_id, price`;
   const [res] = await query(sql, [dish_id]);
   return res;
@@ -50,7 +50,7 @@ export async function getDishInfo(dish_id) {
  * @returns {Promise<boolean>}
  * @param {Dish} dish
  */
-export async function modifyDishInfo(dish) {
+export async function updateOne(dish) {
   const sql = `UPDATE dish SET name = ?, description = ?, price = ?, restaurant_id = ? WHERE dish_id = ?`;
   await query(sql, [dish.name, dish.description, dish.price, dish.restaurant_id, dish.dish_id]);
 }
@@ -59,7 +59,7 @@ export async function modifyDishInfo(dish) {
  * @returns {Promise<boolean>}
  * @param {Dish} dish
  */
-export async function deleteDish(dish) {
+export async function deleteOne(dish) {
   const sql = `DELETE FROM dish  WHERE dish_id = ?`;
   await query(sql, [dish.dish_id]);
   return true;
