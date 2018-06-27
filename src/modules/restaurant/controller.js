@@ -107,4 +107,6 @@ export async function deleteOneRestaurant(ctx, next, id) {
   }
 
   await RestaurantModel.deleteOne(id);
+
+  return await ctx.setResp('删除成功');
 }
