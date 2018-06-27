@@ -21,7 +21,7 @@ export async function checkAuth(ctx, next) {
     return ctx.setResp('已认证', true);
   } else {
     // 未认证
-    throw SoftError(AE.NOT_AUTHORIZED, '未认证');
+    throw new SoftError(AE.NOT_AUTHORIZED, '未认证');
   }
 }
 
@@ -42,7 +42,7 @@ export async function login(ctx, next) {
     const auth_res = await authWithUsernamePassword(username, password_enc);
     if (auth_res == null) {
       // 认证失败
-      throw SoftError(AE.WRONG_PASSWORD, '认证失败');
+      throw new SoftError(AE.WRONG_PASSWORD, '认证失败');
     } else {
       // 认证成功，设置session
       ctx.session.auth_type = 'userpass';
@@ -90,6 +90,6 @@ export async function logout(ctx, next) {
     return ctx.setResp('登出成功', null, null, AE.OK);
   } else {
     // 此用户未登录
-    throw SoftError(AE.NOT_AUTHORIZED, '未认证');
+    throw new SoftError(AE.NOT_AUTHORIZED, '未认证');
   }
 }
