@@ -1,7 +1,7 @@
 import { query, escape } from '../db/service';
 
 /**
- * @returns {Promise<Array<Dish>>}
+ * @returns {Promise<Array<Dish & CategoryInDish>>}
  * @param {DishQueryParam & Limit} params
  */
 export async function retrieveAllByConditions(params) {
@@ -9,9 +9,9 @@ export async function retrieveAllByConditions(params) {
   if (!params.restaurant_id) return [];
   const restaurant_id = params.restaurant_id;
   const limit = params.limit || 10;
-  // params: name, description, restaurant_id
-  const { name, description } = params;
-  const obj = { name, description };
+  // params: name, description, restaurant_id, category_name
+  const { name, description, category_name } = params;
+  const obj = { name, description, category_name };
   const param_arr = [];
   for (const key in obj) {
     if (obj[key]) {
@@ -19,8 +19,14 @@ export async function retrieveAllByConditions(params) {
       param_arr.push(`${key} LIKE '%${val_esc}%'`);
     }
   }
-  const querys = param_arr.join(' AND ');
-  const sql = `SELECT dish_id, name, description, price FROM restaurant limit ? WHERE ${querys} AND restaurant_id = ?`;
+  let querys = param_arr.join(' AND ');
+  const sql = `SELECT dish_id, dish.name AS name, dish.description AS description,
+               price,
+               category.name AS category_name,
+               category.description AS category_description
+               FROM restaurant
+               JOIN category ON dish.category_id = category.category_id
+               limit ? WHERE ${querys} AND restaurant_id = ?`;
   const res = await query(sql, [limit, restaurant_id]);
   return res;
 }

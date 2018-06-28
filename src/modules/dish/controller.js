@@ -9,10 +9,17 @@ import { AE } from '../../utils';
  * @param {INext} next
  */
 export async function retrieveAllDishes(ctx, next) {
-  const { limit, name, description } = ctx.query;
-  const param = { limit, name, description };
+  const { limit, name, description, category_name } = ctx.query;
+  const param = { limit, name, description, category_name };
   const res = await DishModel.retrieveAllByConditions(param);
-  return ctx.setResp('查询成功', res);
+  const ret = {};
+  for (let i = 0; i < res.length; ++i) {
+    if (!(res[i].category_name in ret)) {
+      ret[res[i].category_name] = [];
+    }
+    ret[res[i].category_name].push(res[i]);
+  }
+  return ctx.setResp('查询成功', ret);
 }
 
 /**
