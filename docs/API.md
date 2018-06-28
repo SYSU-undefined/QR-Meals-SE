@@ -60,7 +60,7 @@ API 参考 [RESTful API 设计指南 (by 阮一峰)](http://www.ruanyifeng.com/b
 ### `/restaurant/:restaurant_id/order/:order_id` 某订单资源
 
 |method|简述|服务员/后厨|顾客|管理者|
-|-|-|-|-|-|-|
+|-|-|-|-|-|
 |GET|获取订单详情|:white_check_mark:|只能获取自己的订单详情|:white_check_mark:|
 |PATCH|修改订单信息|-|修改自己的订单信息|:white_check_mark:|
 |DELETE|删除订单|-|删除自己的订单|:white_check_mark:|
