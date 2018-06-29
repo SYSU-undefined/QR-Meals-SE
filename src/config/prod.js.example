@@ -16,7 +16,7 @@ export default {
   },
   fs: {
     url: 'http://example.com'
-  }
+  },
   salt: 'salt-here',
   appid: 'appid-here',
   appsecret: 'appsecret-here'
