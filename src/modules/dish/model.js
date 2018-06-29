@@ -47,7 +47,8 @@ export async function create(dish) {
  * @param {number} dish_id
  */
 export async function retrieveOne(dish_id) {
-  const sql = `SELECT dish_id, name, description, restaurant_id, price`;
+  const sql = `SELECT dish_id, name, description, restaurant_id, price
+               FROM dish WHERE dish_id = ?`;
   const [res] = await query(sql, [dish_id]);
   return res;
 }
@@ -66,7 +67,7 @@ export async function updateOne(dish) {
  * @param {number} dish_id
  */
 export async function deleteOne(dish_id) {
-  const sql = `DELETE FROM dish  WHERE dish_id = ?`;
+  const sql = `DELETE FROM dish WHERE dish_id = ?`;
   await query(sql, [dish_id]);
   return true;
 }
