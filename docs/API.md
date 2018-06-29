@@ -16,6 +16,54 @@ API 参考 [RESTful API 设计指南 (by 阮一峰)](http://www.ruanyifeng.com/b
 |POST  |发送登录请求|:white_check_mark:|
 |DELETE|发送登出请求|:white_check_mark:|
 
+成功返回 200
+
+失败返回 401
+
+### GET
+
+成功返回:
+data中是staff信息
+键表示restaurant_id；值是对象，其中有 `post` 和 `name` 两个字段，表示该用户在某家店的职位和名字
+```json
+{
+	"msg": "已认证",
+	"data": {
+		"1": {
+			"post": "waiter",
+			"name": "小明"
+		}
+	}
+}
+```
+
+### POST
+
+请求:
+```json
+{
+	"username": "username-here",
+	"passowrd": "password-here"
+}
+```
+
+成功返回 (status: 200):
+```json
+{
+	"msg": "认证成功"
+}
+```
+同时设置两个cookie，分别是 `qr-meals-session` 和 `qr-meals-session.sig`
+
+### DELETE
+
+成功返回:
+```json
+{
+	"msg": "登出成功"
+}
+```
+
 ## `/restaurant` 餐馆资源
 
 |method|简述|所有角色|管理者|
