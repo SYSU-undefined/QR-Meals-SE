@@ -38,10 +38,17 @@ declare module 'qrse' {
     price : number
   }
 
+  interface CategoryInDish {
+    category_name : string
+    category_description : string
+  }
+
   interface DishQueryParam {
     name : string
     description : string
     restaurant_id : number
+
+    category_name : string
   }
 
   interface Order {
