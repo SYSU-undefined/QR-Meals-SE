@@ -7,13 +7,13 @@ import { query } from '../db/service';
 export async function retrieveOne(staff_id) {
   const sql = `SELECT staff_id, restaurant_id, post, name FROM staff
                WHERE staff_id = ?`;
-  const res = await query(sql, staff_id);
+  const res = await query(sql, [staff_id]);
   const ret = {};
   res.forEach((v) => {
     ret[v.restaurant_id] = {
       post: v.post,
       name: v.name
-    }
+    };
   });
   /*
   {

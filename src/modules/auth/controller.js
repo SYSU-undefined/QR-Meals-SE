@@ -17,6 +17,7 @@ function encryptPassword(password) {
  */
 export async function checkAuth(ctx, next) {
   if (ctx.session.auth_type) {
+    const { openid } = ctx.session;
     const staff_info = await getStaffPost(openid);
     return ctx.setResp('已认证', staff_info);
   } else {
@@ -40,14 +41,14 @@ export async function login(ctx, next) {
     const { username, password } = ctx.request.body;
     const password_enc = encryptPassword(password);
     const auth_res = await AdminModel.retrieveOneByUserPass(username, password_enc);
-    if (auth_res == null) {
+    if (!auth_res) {
       // 认证失败
       throw new SoftError(AE.WRONG_PASSWORD, '认证失败');
     } else {
       // 认证成功，设置session
       ctx.session.auth_type = 'userpass';
       ctx.session.admin_id = auth_res.admin_id;
-      return ctx.setResp('认证成功');
+      await ctx.setResp('认证成功');
     }
   }
 }

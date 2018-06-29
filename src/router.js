@@ -5,9 +5,9 @@ import bodyParser from 'koa-bodyparser';
 import { sessionKey } from './config';
 import authRtr from './modules/auth/router';
 
-import RedisStore from 'koa-redis';
+// import RedisStore from 'koa-redis';
 
-import { redisClient } from './modules/redis/service';
+// import { redisClient } from './modules/redis/service';
 
 export default function setRoute(app) {
   const apiRtr = new Router({ prefix: '/api' });
@@ -24,7 +24,7 @@ function getSessionMid(app) {
     key: sessionKey,
     maxAge: 24 * 60 * 60 * 1000,
     renew: true,
-    store: new RedisStore({ client: redisClient })
+    // store: new RedisStore({ client: redisClient })
   };
   return session(CONFIG, app);
 }
