@@ -95,7 +95,7 @@ data中是staff信息
 |method|简述|所有角色|管理者|
 |-|-|-|-|
 |GET   |获取餐馆信息|:white_check_mark:|:white_check_mark:|
-|PUT |修改餐馆信息|-|:white_check_mark:|
+|PUT |修改餐馆信息|:x:|:white_check_mark:|
 
 <del>|DELETE|删除餐馆|-|:white_check_mark:|</del>
 
@@ -141,12 +141,12 @@ PUT /restaurant/1
 }
 ```
 
-### `/restaurant/:restaurant_id/menu` 菜单资源
+### `/restaurant/:restaurant_id/dish` 菜单资源
 
 |method|简述|所有角色|管理者|
 |-|-|-|-|
 |GET   |获取菜单列表|:white_check_mark:|:white_check_mark:|
-|POST  |增加菜式|-|:white_check_mark:|
+|POST  |增加菜式|:x:|:white_check_mark:|
 
 #### GET
 
@@ -199,13 +199,13 @@ PUT /restaurant/1
 |image|图片(file)|
 
 
-### `/restaurant/:restaurant_id/menu/:meal_id` 菜单菜式资源
+### `/restaurant/:restaurant_id/dish/:dish_id` 菜单菜式资源
 
 |method|简述|所有角色|管理者|
 |-|-|-|-|
 |GET   |获取菜式详情|:white_check_mark:|:white_check_mark:|
-|PUT |修改菜式详情|-|:white_check_mark:|
-|DELETE|删除菜式|-|:white_check_mark:|
+|PUT |修改菜式详情|:x:|:white_check_mark:|
+|DELETE|删除菜式|:x:|:white_check_mark:|
 
 #### GET
 
@@ -240,34 +240,150 @@ PUT /restaurant/1
 
 200/404/401
 
-**GET `/restaurant/:restaurant_id/menu/:meal_id/qrcode`** : 获取菜式二维码
+**GET `/restaurant/:restaurant_id/dish/:dish_id/qrcode`** : 获取菜式二维码
 
 ### `/restaurant/:restaurant_id/order` 订单资源
 
 |method|简述|服务员/后厨|顾客|管理者|
 |-|-|-|-|-|
 |GET   |获取订单列表|获取该餐馆的所有订单|获取自己在该餐馆的订单|获取该餐馆的所有订单|
-|POST  |创建订单|-|:white_check_mark:|:white_check_mark:|
+|POST  |创建订单|:x:|:white_check_mark:|:white_check_mark:|
+
+#### GET
+
+返回 (status 200):
+```json
+{
+    "data": [{
+        "order_id": 1,
+        "restaurant_id": 1,
+        "customer_id": "xxxx",
+        "item_count": 3,
+        "total_price": 27,
+        "desk_id": 4,
+        "created_at": "yyyy-mm-dd HH:MM:ss"
+    }],
+    "msg": "查询成功"
+}
+```
+
+#### POST
+
+200/401
 
 ### `/restaurant/:restaurant_id/order/:order_id` 某订单资源
 
 |method|简述|服务员/后厨|顾客|管理者|
 |-|-|-|-|-|
 |GET|获取订单详情|:white_check_mark:|只能获取自己的订单详情|:white_check_mark:|
-|PUT|修改订单信息|-|修改自己的订单信息|:white_check_mark:|
-|DELETE|删除订单|-|删除自己的订单|:white_check_mark:|
+|DELETE|删除订单|:x:|删除自己的订单|:white_check_mark:|
+
+<del>|PUT|修改订单信息|-|修改自己的订单信息|:white_check_mark:|</del>
+
+#### GET
+
+返回 (status 200):
+
+```json
+{
+    "data": {
+        "order_id": 1,
+        "restaurant_id": 1,
+        "customer_id": "xxxx",
+        "item_count": 1,
+        "total_price": 27,
+        "desk_id": 4,
+        "created_at": "yyyy-mm-dd HH:MM:ss",
+        "order_items": [{
+            "item_id": 1,
+            "order_id": 1,
+            "dish_id": 3,
+            "unit_price": 9,
+            "quantity": 3,
+            "item_price": 27
+        }, ...]
+    },
+    "msg": "查询成功"
+}
+```
+
+#### DELETE
+
+200/401/404
 
 ### `/restaurant/:restaurant_id/order/:order_id/meal` 某订单菜式资源
 
 |method|简述|服务员/后厨|顾客|管理者|
 |-|-|-|-|-|
 |GET|获取菜式列表|:white_check_mark:|获取自己订单的菜式列表|:white_check_mark:|
-|POST|增加菜式|-|在自己订单中增加菜式|:white_check_mark:|
+|POST|增加菜式|:x:|在自己订单中增加菜式|:white_check_mark:|
+
+
+#### GET
+
+```json
+{
+    "data": [{
+        "item_id": 1,
+        "order_id": 1,
+        "dish_id": 3,
+        "unit_price": 9,
+        "quantity": 3,
+        "item_price": 27
+    }, ...],
+    "msg": "查询成功"
+}
+```
+
+#### POST
+
+```json
+{
+    "order_id": 1,
+    "dish_id": 3,
+    "quantity": 3
+}
+```
+
+返回: 200/401
 
 ### `/restaurant/:restaurant_id/order/:order_id/meal/:order_meal_id` 订单菜式资源
 
 |method|简述|服务员/后厨|顾客|管理者|
 |-|-|-|-|-|
 |GET|获取订单菜式信息|:white_check_mark:|获取自己订单的菜式信息|:white_check_mark:|
-|PUT|修改订单菜式信息|-|修改自己订单的菜式信息|:white_check_mark:|
-|DELETE|删除订单菜式|-|删除自己订单的菜式|:white_check_mark:|
+|PUT|修改订单菜式信息|:x:|修改自己订单的菜式信息|:white_check_mark:|
+|DELETE|删除订单菜式|:x:|删除自己订单的菜式|:white_check_mark:|
+
+#### GET
+
+```json
+{
+    "data": {
+        "item_id": 1,
+        "order_id": 1,
+        "dish_id": 3,
+        "unit_price": 9,
+        "quantity": 3,
+        "item_price": 27
+    },
+    "msg": "查询成功"
+}
+```
+
+#### PUT
+
+请求:
+
+```json
+{
+    "item_id": 1,
+    "quantity": 3,
+}
+```
+
+返回: 200/401
+
+#### DELETE
+
+返回: 200/401/404
