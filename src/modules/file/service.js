@@ -14,20 +14,15 @@ export async function uploadDishImg(dish_id, file) {
   const uri = `/dish_img/${dish_id}.jpg`;
   const option = {
     method: 'POST',
-    uri: fs_url + uri,
+    url: fs_url + uri,
     formData: {
-      file: {
-        value: Buffer.from(file.buffer),
-        option: {
-          filename: `${dish_id}.jpg`,
-          contentType: 'image/jpg'
-        }
-      }
+      file: Buffer.from(file.buffer)
     }
   };
   try {
     return await rp(option);
   } catch (err) {
+    console.log(err);
     throw new SoftError(AE.INTERNAL_ERROR, '文件系统错误');
   }
 }

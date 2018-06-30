@@ -3,6 +3,7 @@ import Router from 'koa-express-router';
 import { createRestaurant, retrieveAllRestaurants, retrieveOneRestaurant, deleteOneRestaurant, updateOneRestaurant } from './controller';
 import { parseRestaurant } from './controller';
 import { exportRtr } from '../../utils';
+import dishRouter from '../dish/router';
 
 const restaurantRouter = new Router();
 
@@ -20,5 +21,10 @@ idRtr.route('/')
   .get(retrieveOneRestaurant)
   .put(updateOneRestaurant)
   .delete(deleteOneRestaurant);
+
+// Path: /restaurnat/:restaurant_id/dish
+idRtr.use('/dish', exportRtr(dishRouter));
+
+export const restaurantIdRouter = idRtr;
 
 export default restaurantRouter;

@@ -148,6 +148,57 @@ PUT /restaurant/1
 |GET   |获取菜单列表|:white_check_mark:|:white_check_mark:|
 |POST  |增加菜式|-|:white_check_mark:|
 
+#### GET
+
+```json
+{
+    "data": {
+        "粥类": [
+            {
+                "dish_id": 1,
+                "name": "茅根马蹄粥",
+                "description": "偏甜口味，清热解暑",
+                "price": 8,
+                "category_name": "粥类",
+                "category_description": "粥粥粥粥"
+            },
+            {
+                "dish_id": 2,
+                "name": "皮蛋瘦肉粥",
+                "description": "经典粥类",
+                "price": 9,
+                "category_name": "粥类",
+                "category_description": "粥粥粥粥"
+            }
+        ],
+        "粉类": [
+            {
+                "dish_id": 3,
+                "name": "三丝炒粉",
+                "description": "青椒、红萝卜、火腿",
+                "price": 10,
+                "category_name": "粉类",
+                "category_description": "粉粉粉粉"
+            }
+				],
+				...
+    },
+    "msg": "查询成功"
+}
+```
+
+#### POST
+
+请求: (使用form data)
+|字段|描述|
+|-|-|
+|name|名字|
+|description|描述|
+|price|价格|
+|category_id|目录id|
+|image|图片(file)|
+
+
 ### `/restaurant/:restaurant_id/menu/:meal_id` 菜单菜式资源
 
 |method|简述|所有角色|管理者|
@@ -155,6 +206,39 @@ PUT /restaurant/1
 |GET   |获取菜式详情|:white_check_mark:|:white_check_mark:|
 |PUT |修改菜式详情|-|:white_check_mark:|
 |DELETE|删除菜式|-|:white_check_mark:|
+
+#### GET
+
+错误 status 404
+
+返回 (status 200) :
+```json
+{
+    "data": {
+        "dish_id": 15,
+        "name": "测试222",
+        "description": "描述",
+        "restaurant_id": 1,
+        "price": 10
+    },
+    "msg": "查询成功"
+}
+```
+
+#### PUT
+
+请求: (使用form data)
+|字段|描述|
+|-|-|
+|name|名字|
+|description|描述|
+|price|价格|
+|category_id|目录id|
+|image|图片(file)|
+
+#### DELETE
+
+200/404/401
 
 **GET `/restaurant/:restaurant_id/menu/:meal_id/qrcode`** : 获取菜式二维码
 

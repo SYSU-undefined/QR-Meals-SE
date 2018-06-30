@@ -20,14 +20,16 @@ export async function retrieveAllByConditions(params) {
     }
   }
   let querys = param_arr.join(' AND ');
+  if (querys.length > 0) {
+    querys = querys + ' AND ';
+  }
   const sql = `SELECT dish_id, dish.name AS name, dish.description AS description,
                price,
                category.name AS category_name,
                category.description AS category_description
-               FROM restaurant
-               JOIN category ON dish.category_id = category.category_id
-               limit ? WHERE ${querys} AND restaurant_id = ?`;
-  const res = await query(sql, [limit, restaurant_id]);
+               FROM dish, category
+               WHERE dish.category_id = category.category_id AND ${querys} restaurant_id = ? limit ?`;
+  const res = await query(sql, [restaurant_id, limit]);
   return res;
 }
 
@@ -37,8 +39,8 @@ export async function retrieveAllByConditions(params) {
  */
 export async function create(dish) {
   if (!dish) return false;
-  const sql = `INSERT INTO dish (name, description, restaurant_id, price) VALUES (?, ?, ?)`;
-  const res = await query(sql, [dish.name, dish.restaurant_id, dish.price]);
+  const sql = `INSERT INTO dish (category_id, name, description, restaurant_id, price) VALUES (?, ?, ?, ?, ?)`;
+  const res = await query(sql, [dish.category_id, dish.name, dish.description, dish.restaurant_id, dish.price]);
   return res.insertId;
 }
 
@@ -58,8 +60,8 @@ export async function retrieveOne(dish_id) {
  * @param {Dish} dish
  */
 export async function updateOne(dish) {
-  const sql = `UPDATE dish SET name = ?, description = ?, price = ?, restaurant_id = ? WHERE dish_id = ?`;
-  await query(sql, [dish.name, dish.description, dish.price, dish.restaurant_id, dish.dish_id]);
+  const sql = `UPDATE dish SET category_id = ?, name = ?, description = ?, price = ?, restaurant_id = ? WHERE dish_id = ?`;
+  await query(sql, [dish.category_id, dish.name, dish.description, dish.price, dish.restaurant_id, dish.dish_id]);
 }
 
 /**

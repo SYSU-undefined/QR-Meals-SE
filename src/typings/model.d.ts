@@ -35,6 +35,7 @@ declare module 'qrse' {
     name : string
     description : string
     restaurant_id : number
+    category_id : number
     price : number
   }
 
