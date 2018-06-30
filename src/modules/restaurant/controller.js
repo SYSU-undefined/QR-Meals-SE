@@ -11,11 +11,11 @@ import { getStaffPost } from '../staff/service';
  * @param {number} id
  */
 export async function parseRestaurant(ctx, next, id) {
-  const restaurant_id = id;
   ctx.paramData = {};
   const { paramData } = ctx;
   const restaurant = await RestaurantModel.retrieveOne(id);
   paramData.restaurant = restaurant;
+  const { restaurant_id } = restaurant;
 
   if (!restaurant) {
     throw new SoftError(AE.NOT_FOUND, '不存在的店家');
@@ -83,8 +83,10 @@ export async function retrieveOneRestaurant(ctx, next, id) {
  * @param {INext} next
  * @param {number} id
  */
-export async function updateOneRestaurant(ctx, next, id) {
+export async function updateOneRestaurant(ctx, next) {
   const { post } = ctx.paramData;
+  const { restaurant_id } = ctx.paramData.restaurant;
+  console.log(post);
   if (post !== 'admin') {
     throw new SoftError(AE.NO_PERMISSION, '权限不足');
   }
@@ -92,7 +94,7 @@ export async function updateOneRestaurant(ctx, next, id) {
   const { name, location, description } = ctx.request.body;
 
   const newRestaurant = {
-    restaurant_id: id,
+    restaurant_id,
     name,
     location,
     description

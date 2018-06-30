@@ -50,12 +50,7 @@ export async function retrieveOne(restaurant_id) {
   const sql = `SELECT restaurant_id, name, description, location FROM restaurant
                WHERE restaurant_id = ?`;
   const [res] = await query(sql, [restaurant_id]);
-  return {
-    restaurant_id: res.restaurant_id,
-    name: res.name,
-    description: res.description,
-    location: res.location
-  };
+  return res;
 }
 
 /**
@@ -63,6 +58,7 @@ export async function retrieveOne(restaurant_id) {
  * @param {Restaurant} restaurant
  */
 export async function updateOne(restaurant) {
+  console.log(restaurant);
   const sql = `UPDATE restaurant SET name = ?, description = ?, location = ? WHERE restaurant_id = ?`;
   await query(sql, [restaurant.name, restaurant.description, restaurant.location, restaurant.restaurant_id]);
   return true;
