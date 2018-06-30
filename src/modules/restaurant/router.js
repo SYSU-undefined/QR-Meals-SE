@@ -5,12 +5,14 @@ import { parseRestaurant } from './controller';
 
 const restaurantRouter = new Router();
 
-restaurantRouter.route('/').get(retrieveAllRestaurants)
-                           .post(createRestaurant);
+restaurantRouter.route('/')
+  .get(retrieveAllRestaurants)
+  .post(createRestaurant);
 
-restaurantRouter.route('/:restaurant_id').get(retrieveOneRestaurant)
-                                         .put(updateOneRestaurant)
-                                         .delete(deleteOneRestaurant);
+restaurantRouter.route('/:restaurant_id')
+  .get(retrieveOneRestaurant)
+  .put(updateOneRestaurant)
+  .delete(deleteOneRestaurant);
 
 restaurantRouter.param('restaurant_id', parseRestaurant);
 

@@ -12,6 +12,7 @@ import { getStaffPost } from '../staff/service';
  */
 export async function parseRestaurant(ctx, next, id) {
   const restaurant_id = id;
+  ctx.paramData = {};
   const { paramData } = ctx;
   const restaurant = await RestaurantModel.retrieveOne(id);
   paramData.restaurant = restaurant;
@@ -23,7 +24,7 @@ export async function parseRestaurant(ctx, next, id) {
   const { auth_type } = ctx.session;
   if (auth_type === 'userpass') {
     const admin = await AdminModel.retrieveOne(ctx.session.admin_id);
-    if (restaurant_id == admin.restaurant_id) {
+    if (restaurant_id === admin.restaurant_id) {
       paramData.post = 'admin';
       paramData.restaurant_id = restaurant_id;
     } else {
@@ -72,7 +73,8 @@ export async function createRestaurant(ctx, next) {
  */
 export async function retrieveOneRestaurant(ctx, next, id) {
   // 在 parse 时，已经拿到了 restaurant
-  return ctx.setResp('查询成功', ctx.paramData.resaurant);
+  const { restaurant } = ctx.paramData;
+  return ctx.setResp('查询成功', restaurant);
 }
 
 /**
