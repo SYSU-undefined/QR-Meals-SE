@@ -69,17 +69,77 @@ data中是staff信息
 |method|简述|所有角色|管理者|
 |-|-|-|-|
 |GET   |获取餐馆列表|:white_check_mark:|:white_check_mark:|
-|POST  |创建餐馆|-|:white_check_mark:|
+
+<del>|POST  |创建餐馆|-|:white_check_mark:|</del>
+
+### GET
+
+成功返回:
+```json
+{
+	"data": [
+		{
+			"restaurant_id": 1,
+			"name": "美国Darsk♂饭店",
+			"description": "Deep, Dark and Fatastic",
+			"location": "Dungeon aaaa"
+		},
+		...
+	],
+	"msg": "查询成功"
+}
+```
 
 ### `/restaurant/:restaurant_id` 某餐馆资源
 
 |method|简述|所有角色|管理者|
 |-|-|-|-|
 |GET   |获取餐馆信息|:white_check_mark:|:white_check_mark:|
-|PATCH |修改餐馆信息|-|:white_check_mark:|
-|DELETE|删除餐馆|-|:white_check_mark:|
+|PUT |修改餐馆信息|-|:white_check_mark:|
+
+<del>|DELETE|删除餐馆|-|:white_check_mark:|</del>
 
 **GET `/restaurant/:restaurant_id/qrcode`** : 获取餐馆二维码
+
+#### GET
+
+GET /restaurant/1
+
+成功返回:
+
+```json
+{
+	"data": {
+		"restaurant_id": 1,
+		"name": "美国Dark♂饭店",
+		"description": "Deep, Dark and Fatastic",
+		"location": "Dungeon aaaa"
+	},
+	"msg": "查询成功"
+}
+```
+
+#### PUT
+
+PUT /restaurant/1
+
+请求:
+
+```json
+{
+	"name": "美国Dark♂饭店",
+	"description": "Deep, Dark and Fatastic",
+	"location": "Dungeon aaaa"
+}
+```
+
+返回:
+
+```json
+{
+	"msg": "店家信息更新成功"
+}
+```
 
 ### `/restaurant/:restaurant_id/menu` 菜单资源
 
@@ -93,7 +153,7 @@ data中是staff信息
 |method|简述|所有角色|管理者|
 |-|-|-|-|
 |GET   |获取菜式详情|:white_check_mark:|:white_check_mark:|
-|PATCH |修改菜式详情|-|:white_check_mark:|
+|PUT |修改菜式详情|-|:white_check_mark:|
 |DELETE|删除菜式|-|:white_check_mark:|
 
 **GET `/restaurant/:restaurant_id/menu/:meal_id/qrcode`** : 获取菜式二维码
@@ -110,7 +170,7 @@ data中是staff信息
 |method|简述|服务员/后厨|顾客|管理者|
 |-|-|-|-|-|
 |GET|获取订单详情|:white_check_mark:|只能获取自己的订单详情|:white_check_mark:|
-|PATCH|修改订单信息|-|修改自己的订单信息|:white_check_mark:|
+|PUT|修改订单信息|-|修改自己的订单信息|:white_check_mark:|
 |DELETE|删除订单|-|删除自己的订单|:white_check_mark:|
 
 ### `/restaurant/:restaurant_id/order/:order_id/meal` 某订单菜式资源
@@ -125,5 +185,5 @@ data中是staff信息
 |method|简述|服务员/后厨|顾客|管理者|
 |-|-|-|-|-|
 |GET|获取订单菜式信息|:white_check_mark:|获取自己订单的菜式信息|:white_check_mark:|
-|PATCH|修改订单菜式信息|-|修改自己订单的菜式信息|:white_check_mark:|
+|PUT|修改订单菜式信息|-|修改自己订单的菜式信息|:white_check_mark:|
 |DELETE|删除订单菜式|-|删除自己订单的菜式|:white_check_mark:|
