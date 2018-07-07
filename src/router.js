@@ -16,7 +16,7 @@ export default function setRoute(app) {
   app.use(apiRtr.routes(false));
 
   // 使用 session, bodyparser 中间件
-  apiRtr.use(getSessionMid(app), getBodyParserMid());
+  apiRtr.use(getSessionMid(app), getBodyParserMid(), makeParamDataMid);
 
   apiRtr.use('/auth', authRtr.routes());
   apiRtr.use('/restaurant', restaurantRtr.routes());
@@ -35,4 +35,14 @@ function getSessionMid(app) {
 
 function getBodyParserMid() {
   return bodyParser();
+}
+
+/**
+ *
+ * @param {Context} ctx
+ * @param {INext} next
+ */
+async function makeParamDataMid(ctx, next) {
+  ctx.paramData = {};
+  return await next();
 }

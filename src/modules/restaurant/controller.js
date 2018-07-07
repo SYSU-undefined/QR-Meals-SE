@@ -11,7 +11,6 @@ import { getStaffPost } from '../staff/service';
  * @param {number} id
  */
 export async function parseRestaurant(ctx, next, id) {
-  ctx.paramData = {};
   const { paramData } = ctx;
   const restaurant = await RestaurantModel.retrieveOne(id);
   paramData.restaurant = restaurant;
