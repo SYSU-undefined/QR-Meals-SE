@@ -24,7 +24,7 @@ export async function retrieveAllByConditions(params) {
     querys = querys + ' AND ';
   }
   const sql = `SELECT dish_id, dish.name AS name, dish.description AS description,
-               price,
+               price, category.category_id AS category_id,
                category.name AS category_name,
                category.description AS category_description
                FROM dish, category
