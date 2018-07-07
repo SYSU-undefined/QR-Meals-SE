@@ -16,7 +16,7 @@ export async function retrieveAllCategories(ctx, next) {
  * @param {INext} next
  */
 export async function createCategory(ctx, next) {
-  const { name, description } = ctx.request;
+  const { name, description } = ctx.request.body;
   const category = { name, description };
 
   const insertId = await CategoryModel.createCategory(category);

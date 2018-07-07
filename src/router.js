@@ -20,7 +20,7 @@ export default function setRoute(app) {
 
   apiRtr.use('/auth', authRtr.routes());
   apiRtr.use('/restaurant', restaurantRtr.routes());
-  apiRtr.use('/category', categoryRouter.route());
+  apiRtr.use('/category', categoryRouter.routes());
 }
 
 function getSessionMid(app) {
