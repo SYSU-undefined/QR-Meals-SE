@@ -20,6 +20,7 @@ declare global {
   type Order = QRSE.Order
   type OrderItem = QRSE.OrderItem
   type Desk = QRSE.Desk
+  type Category = QRSE.Category
 
   type CategoryInDish = QRSE.CategoryInDish
 

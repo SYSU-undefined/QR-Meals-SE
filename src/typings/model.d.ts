@@ -76,4 +76,10 @@ declare module 'qrse' {
     restaurant_id : number
     description : string
   }
+
+  interface Category {
+    category_id : number
+    name : string
+    description : string
+  }
 }

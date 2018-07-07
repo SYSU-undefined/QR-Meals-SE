@@ -5,6 +5,7 @@ import bodyParser from 'koa-bodyparser';
 import { sessionKey } from './config';
 import authRtr from './modules/auth/router';
 import restaurantRtr from './modules/restaurant/router';
+import categoryRouter from './modules/category/router';
 
 // import RedisStore from 'koa-redis';
 
@@ -19,6 +20,7 @@ export default function setRoute(app) {
 
   apiRtr.use('/auth', authRtr.routes());
   apiRtr.use('/restaurant', restaurantRtr.routes());
+  apiRtr.use('/category', categoryRouter.route());
 }
 
 function getSessionMid(app) {
