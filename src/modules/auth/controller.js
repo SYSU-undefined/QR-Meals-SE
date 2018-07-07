@@ -48,7 +48,8 @@ export async function login(ctx, next) {
       // 认证成功，设置session
       ctx.session.auth_type = 'userpass';
       ctx.session.admin_id = auth_res.admin_id;
-      await ctx.setResp('认证成功');
+      delete auth_res.password;
+      await ctx.setResp('认证成功', auth_res);
     }
   }
 }
