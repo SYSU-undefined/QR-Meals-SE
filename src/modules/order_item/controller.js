@@ -26,7 +26,7 @@ export async function createOrderItem(ctx, next) {
     throw new SoftError(AE.BAD_REQUEST, '参数不完整');
   }
 
-  const [{ price: unit_price }] = await DishModel.retrieveOne(dish_id);
+  const { price: unit_price } = await DishModel.retrieveOne(dish_id);
   const orderItem = { unit_price, order_id, dish_id, quantity };
 
   const { insertId } = await OrderItemModel.create(orderItem);
