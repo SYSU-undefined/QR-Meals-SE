@@ -1,13 +1,13 @@
 import Router from 'koa-express-router';
 
-import { parseOrderItem, retrieveAllorderItems, createOrderItem, retrieveOneOrderItem, updateOrderItem, deleteOrderItem } from './controller';
+import { parseOrderItem, retrieveAllOrderItems, createOrderItem, retrieveOneOrderItem, deleteOrderItem } from './controller';
 
 import { exportRtr } from '../../utils';
 
 const orderItemRouter = new Router();
 
 orderItemRouter.route('/')
-  .get(retrieveAllorderItems)
+  .get(retrieveAllOrderItems)
   .post(createOrderItem);
 
 orderItemRouter.param('order_meal_id', parseOrderItem);
