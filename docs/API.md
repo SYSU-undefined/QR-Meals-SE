@@ -270,6 +270,12 @@ PUT /restaurant/1
 
 #### POST
 
+```json
+{
+    "desk_id": 1
+}
+```
+
 200/401
 
 ### `/restaurant/:restaurant_id/order/:order_id` 某订单资源
