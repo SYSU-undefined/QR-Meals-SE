@@ -33,8 +33,8 @@ export async function createOrder(order) {
   if (!order) return false;
   const sql = `INSERT INTO \`order\` (restaurant_id, customer_id, item_count,
                total_price, desk_id) VALUES (?,?,?,?,?)`;
-  await query(sql, order.restaurant_id, order.customer_id,
-    order.item_count, order.total_price, order.desk_id);
+  await query(sql, [order.restaurant_id, order.customer_id,
+    order.item_count, order.total_price, order.desk_id]);
   return true;
 }
 
@@ -46,7 +46,7 @@ export async function getOrderInfo(order_id) {
   const sql = `SELECT order_id, restaurant_id, customer_id, item_count,
                total_price, created_at, desk_id FROM \`order\`
                WHERE order_id = ?`;
-  const [res] = await query(sql, order_id);
+  const [res] = await query(sql, [order_id]);
   return res;
 }
 

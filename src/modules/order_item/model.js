@@ -40,9 +40,9 @@ export async function modifyOrderItemInfo(order_item) {
   const sql = `UPDATE order_item SET order_id = ?, dish_id = ?,
                unit_price = ?, quantity = ?, item_price = ?
                WHERE item_id = ?`;
-  await query(sql, order_item.order_id, order_item.dish_id,
+  await query(sql, [order_item.order_id, order_item.dish_id,
     order_item.unit_price, order_item.quantity,
-    order_item.item_price, order_item.item_id);
+    order_item.item_price, order_item.item_id]);
   return true;
 }
 
@@ -52,6 +52,6 @@ export async function modifyOrderItemInfo(order_item) {
  */
 export async function deleteOrderItem(order_item_id) {
   const sql = `DELETE FROM order_item WHERE item_id = ?`;
-  await query(sql, order_item_id);
+  await query(sql, [order_item_id]);
   return true;
 }
