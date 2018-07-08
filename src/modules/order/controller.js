@@ -9,7 +9,8 @@ import { AE } from '../../utils';
  */
 export async function retrieveAllOrders(ctx, next) {
   const { restaurant_id } = ctx.paramData.restaurant;
-  const { openid: customer_id } = ctx.session;
+  // const { openid: customer_id } = ctx.session;
+  const customer_id = 'fake-openid';
   const { limit } = ctx.query;
   const param = { limit, customer_id, restaurant_id };
   const res = await OrderModel.getOrders(param);
@@ -27,7 +28,8 @@ export async function createOrder(ctx, next) {
     throw new SoftError(AE.BAD_REQUEST, '参数不完整');
   }
   const { restaurant_id } = ctx.paramData.restaurant;
-  const { openid: customer_id } = ctx.session;
+  // const { openid: customer_id } = ctx.session;
+  const customer_id = 'fake-openid';
 
   const order = { restaurant_id, customer_id, item_count: 0, total_price: 0, desk_id: Number(desk_id) };
 
@@ -52,7 +54,8 @@ export async function parseOrder(ctx, next, id) {
     throw new SoftError(AE.NOT_FOUND, '不存在的订单');
   }
 
-  const { openid: customer_id } = ctx.session;
+  // const { openid: customer_id } = ctx.session;
+  const customer_id = 'fake-openid';
   if (order.customer_id !== customer_id) {
     throw new SoftError(AE.NO_PERMISSION, '权限不足');
   }
