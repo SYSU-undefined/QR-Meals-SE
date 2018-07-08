@@ -16,9 +16,8 @@ export async function getOrderItemsByOrder(order_id) {
  * @param {OrderItem} order_item
  */
 export async function createOrderItem(order_item) {
-  const sql = `INSERT INTO order_item (order_id, dish_id, unit_price, quantity,
-               item_price) VALUES (?,?,?,?,?)`;
-  await query(sql, [order_item.order_id, order_item.dish_id, order_item.unit_price, order_item.quantity, order_item.item_price]);
+  const sql = `INSERT INTO order_item (order_id, dish_id, unit_price, quantity) VALUES (?,?,?,?)`;
+  await query(sql, [order_item.order_id, order_item.dish_id, order_item.unit_price, order_item.quantity]);
   return true;
 }
 
