@@ -29,7 +29,7 @@ export async function createOrderItem(ctx, next) {
   const [{ price: unit_price }] = await DishModel.retrieveOne(dish_id);
   const orderItem = { unit_price, order_id, dish_id, quantity };
 
-  const insertId = await OrderItemModel.create(orderItem);
+  const { insertId } = await OrderItemModel.create(orderItem);
   return ctx.setResp('增加菜式成功', {
     item_id: insertId
   });
