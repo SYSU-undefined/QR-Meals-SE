@@ -1,6 +1,6 @@
 import Router from 'koa-express-router';
 
-import { parseOrder, retrieveAllOrders, createOrder, retrieveOneorder, deleteOrder } from './controller';
+import { parseOrder, retrieveAllOrders, createOrder, retrieveOneOrder, deleteOrder } from './controller';
 import orderItemRouter from '../order_item/router';
 import { exportRtr } from '../../utils';
 
@@ -17,7 +17,7 @@ const idRtr = new Router();
 orderRouter.use('/:order_id', exportRtr(idRtr));
 
 idRtr.route('/')
-  .get(retrieveOneorder)
+  .get(retrieveOneOrder)
   .delete(deleteOrder);
 
 idRtr.use('/meal', exportRtr(orderItemRouter));
