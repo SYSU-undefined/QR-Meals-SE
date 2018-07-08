@@ -5,7 +5,7 @@ import { query } from '../db/service';
  * @param {number} order_id
  */
 export async function getOrderItemsByOrder(order_id) {
-  const sql = `SELECT item_id, order_id, dish_id, unit_price, quantity
+  const sql = `SELECT item_id, order_id, dish_id, unit_price, quantity,
                item_price FROM order_item WHERE order_id = ?`;
   const res = await query(sql, [order_id]);
   return res;
