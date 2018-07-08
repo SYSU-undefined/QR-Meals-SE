@@ -11,14 +11,14 @@ export async function getOrders(params) {
   limit = limit || 10;
   if (customer_id) {
     const sql = `SELECT order_id, restaurant_id, customer_id, item_count,
-                total_price, desk_id, created_at FROM order
+                total_price, desk_id, created_at FROM \`order\`
                 WHERE restaurant_id = ? AND customer_id = ?
                 limit ?`;
     const res = await query(sql, [restaurant_id, customer_id, limit]);
     return res;
   } else {
     const sql = `SELECT order_id, restaurant_id, customer_id, item_count,
-                total_price, desk_id, created_at FROM order WHERE restaurant_id = ?
+                total_price, desk_id, created_at FROM \`order\` WHERE restaurant_id = ?
                 limit ?`;
     const res = await query(sql, [restaurant_id, limit]);
     return res;
@@ -31,7 +31,7 @@ export async function getOrders(params) {
  */
 export async function createOrder(order) {
   if (!order) return false;
-  const sql = `INSERT INTO order (restaurant_id, customer_id, item_count,
+  const sql = `INSERT INTO \`order\` (restaurant_id, customer_id, item_count,
                total_price, desk_id) VALUES (?,?,?,?,?)`;
   await query(sql, order.restaurant_id, order.customer_id,
     order.item_count, order.total_price, order.desk_id);
@@ -44,7 +44,7 @@ export async function createOrder(order) {
  */
 export async function getOrderInfo(order_id) {
   const sql = `SELECT order_id, restaurant_id, customer_id, item_count,
-               total_price, created_at, desk_id FROM order
+               total_price, created_at, desk_id FROM \`order\`
                WHERE order_id = ?`;
   const [res] = await query(sql, order_id);
   return res;
@@ -55,7 +55,7 @@ export async function getOrderInfo(order_id) {
  * @param {Order} order
  */
 export async function modifyOrderInfo(order) {
-  const sql = `UPDATE order SET restaurant_id = ?, customer_id = ?,
+  const sql = `UPDATE \`order\` SET restaurant_id = ?, customer_id = ?,
                item_count = ?, total_price = ?, desk_id = ?`;
   await query(sql, [order.restaurant_id, order.customer_id,
     order.item_count, order.total_price, order.desk_id]);
@@ -66,7 +66,7 @@ export async function modifyOrderInfo(order) {
  * @param {number} order_id
  */
 export async function deleteOrder(order_id) {
-  const sql = `DELETE FROM order WHERE order_id = ?`;
+  const sql = `DELETE FROM \`order\` WHERE order_id = ?`;
   await query(sql, [order_id]);
   return true;
 }
