@@ -10,7 +10,7 @@ import { AE } from '../../utils';
  */
 export async function retrieveAllOrderItems(ctx, next) {
   const { order: { order_id }} = ctx.paramData;
-  const res = await OrderItemModel.getOrderItems(order_id);
+  const res = await OrderItemModel.getOrderItemsByOrder(Number(order_id));
   return ctx.setResp('查询成功', res);
 }
 
@@ -43,7 +43,7 @@ export async function createOrderItem(ctx, next) {
  */
 export async function parseOrderItem(ctx, next, id) {
   const { paramData } = ctx;
-  const orderItem = await OrderItemModel.getOrderItemInfo(id);
+  const orderItem = await OrderItemModel.getOrderItemInfo(Number(id));
   paramData.orderItem = orderItem;
 
   if (!orderItem || orderItem.order_id !== paramData.order.order_id) {

@@ -29,7 +29,7 @@ export async function createOrder(ctx, next) {
   const { restaurant_id } = ctx.paramData.restaurant;
   const { openid: customer_id } = ctx.session;
 
-  const order = { restaurant_id, customer_id, item_count: 0, total_price: 0, desk_id };
+  const order = { restaurant_id, customer_id, item_count: 0, total_price: 0, desk_id: Number(desk_id) };
 
   const insertId = await OrderModel.create(order);
   return await ctx.setResp('创建订单成功', {
@@ -45,7 +45,7 @@ export async function createOrder(ctx, next) {
  */
 export async function parseOrder(ctx, next, id) {
   const { paramData } = ctx;
-  const order = await OrderModel.getOrderInfo(id);
+  const order = await OrderModel.getOrderInfo(Number(id));
   paramData.order = order;
 
   if (!order || order.restaurant_id !== paramData.restaurant.restaurant_id) {
@@ -85,7 +85,7 @@ export async function deleteOrder(ctx, next) {
 
   const { order_id } = ctx.paramData.order;
 
-  await OrderModel.deleteOne(order_id);
+  await OrderModel.deleteOne(Number(order_id));
 
   return await ctx.setResp('删除成功');
 }
