@@ -20,7 +20,7 @@ export async function retrieveAllOrderItems(ctx, next) {
  * @param {INext} next
  */
 export async function createOrderItem(ctx, next) {
-  const { order: { order_id } } = ctx.paramData;
+  const { order: { order_id }} = ctx.paramData;
   const { dish_id, quantity } = ctx.request.body;
   if (!(dish_id && quantity)) {
     throw new SoftError(AE.BAD_REQUEST, '参数不完整');

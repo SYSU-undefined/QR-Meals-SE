@@ -31,7 +31,7 @@ export async function createOrder(ctx, next) {
 
   const order = { restaurant_id, customer_id, item_count: 0, total_price: 0, desk_id: Number(desk_id) };
 
-  const insertId = await OrderModel.create(order);
+  const insertId = await OrderModel.createOrder(order);
   return await ctx.setResp('创建订单成功', {
     order_id: insertId
   });
