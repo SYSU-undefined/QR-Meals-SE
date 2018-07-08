@@ -4,6 +4,7 @@ import { createRestaurant, retrieveAllRestaurants, retrieveOneRestaurant, delete
 import { parseRestaurant } from './controller';
 import { exportRtr } from '../../utils';
 import dishRouter from '../dish/router';
+import orderRouter from '../order/router';
 
 const restaurantRouter = new Router();
 
@@ -24,6 +25,7 @@ idRtr.route('/')
 
 // Path: /restaurnat/:restaurant_id/dish
 idRtr.use('/dish', exportRtr(dishRouter));
+idRtr.use('/order', exportRtr(orderRouter));
 
 export const restaurantIdRouter = idRtr;
 
